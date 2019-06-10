@@ -1,2 +1,7 @@
-h2
-= new Date().toDateString()
+block myForm
+form(id="myForm", method="post", action="/users/create")
+    label(for="name") Name
+    input(type="text", id="name", name="name")
+    label(for="email") Email
+    input(type="email", id="email", name="email")
+    input(type="submit", value="Add User")
