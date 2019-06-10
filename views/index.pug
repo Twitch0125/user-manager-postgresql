@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  - let data = [{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},]
+  ul 
+    each val in data
+      li= 'username: ' + val.username + ' email: ' + val.email
