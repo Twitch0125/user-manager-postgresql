@@ -1,9 +1,20 @@
-extends layout
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div(class="userCreation" id="userCreation")
+      form(class="myForm" id="myForm", method="post", action="/users")
+        h2(class="formHead") User Creation
+        label(class="formField formLabel" for="username") Username
+        input(class="formField formInput" type="text", id="username", name="username")
+        label(class="formField formLabel" for="name") Name
+        input(class="formField formInput" type="text", id="name", name="name")
+        label(class="formField formLabel" for="email") Email
+        input(class="formField formInput" type="email", id="email", name="email")
+        label(class="formField formLabel" for='age') Age
+        input(class="formField formInput" type="number" id='email', name='age')
+        input(class="formField formButton" type="submit", value="Add User")
+      h3(class="uuid") your id will be: #{id}
 
-block content
-  h1= title
-  p Welcome to #{title}
-  - let data = [{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},{username: "kaleb", email:"kaleb@email.com"},]
-  ul 
-    each val in data
-      li= 'username: ' + val.username + ' email: ' + val.email
