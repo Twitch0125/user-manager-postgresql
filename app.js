@@ -23,6 +23,17 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+mongoose.connect("mongodb://localhost/appusers", { useNewUrlParser: true }); // "userManagement" is the db name
+const db = mongoose.connection;
+const userSchema = new mongoose.Schema({
+  name: String,
+  role: String,
+  age: { type: Number, min: 18, max: 70 },
+  createdDate: { type: Date, default: Date.now }
+});
+
+const user = mongoose.model("userCollection", userSchema);
+
 app.get("/", indexRouter);
 app.post("/users", usersRouter, (req, res, next) => {
   let id = req.body.id,
@@ -39,6 +50,7 @@ app.post("/users", usersRouter, (req, res, next) => {
   });
   next();
 });
+app.get("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
