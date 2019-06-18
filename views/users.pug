@@ -3,8 +3,11 @@ html
     head
         title= title
         link(rel='stylesheet', href='/stylesheets/style.css')
-        script(type='text/javascript', src='../users.json')
-        script(typle="text/javascript", src="../javascripts/users.js")
+        script(type='text/javascript', src='users.json')
+        script(type="text/javascript", src="/javascripts/users.js")
         script(src="https://code.jquery.com/jquery-3.4.1.min.js")
 
     h3 user listing
+    ul
+        each val, index in userData
+            li= index + ': ' + val

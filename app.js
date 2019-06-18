@@ -9,6 +9,8 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var uuidv1 = require("uuid/v1");
 
+let userData = require('/users.json')
+
 const User = require("./User");
 var app = express();
 
@@ -27,13 +29,15 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", indexRouter);
 app.post("/addUser", usersRouter, (req, res, next) => {
   let id = uuidv1(),
+    username = req.body.username,
     name = req.body.name,
     email = req.body.email,
     age = req.body.age;
-  let user = new User(id, name, email, age);
+  let user = new User(id, username, name, email, age);
   let userJSON = JSON.stringify(user);
-  let usersStream = fs.createWriteStream("users.json", { flags: "a" });
-  usersStream.write(userJSON, err => {
+  userData.push(userJSON);
+  let usersStream = fs.createWriteStream("public/users.json", { flags: "a" });
+  usersStream.write(userData, err => {
     if (err) console.log("error writing userJSON");
     else console.log("userJSON write successful");
     usersStream.end();
