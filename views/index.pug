@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     div(class="userCreation" id="userCreation")
-      form(class="myForm" id="myForm", method="post", action="/user")
+      form(class="myForm" id="myForm", method="post", action="/addUser")
         h2(class="formHead") User Creation
         label(class="formField formLabel" for="username") Username
         input(class="formField formInput" type="text", id="username", name="username")
@@ -16,5 +16,5 @@ html
         label(class="formField formLabel" for='age') Age
         input(class="formField formInput" type="number" id='email', name='age')
         input(class="formField formButton" type="submit", value="Add User")
-      h3(class="uuid") your id will be: #{id}
+      
 

@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 const fs = require("fs");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var uuidv1 = require("uuid/v1");
 
 const User = require("./User");
 var app = express();
@@ -23,20 +24,9 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-mongoose.connect("mongodb://localhost/appusers", { useNewUrlParser: true }); // "userManagement" is the db name
-const db = mongoose.connection;
-const userSchema = new mongoose.Schema({
-  name: String,
-  role: String,
-  age: { type: Number, min: 18, max: 70 },
-  createdDate: { type: Date, default: Date.now }
-});
-
-const user = mongoose.model("userCollection", userSchema);
-
 app.get("/", indexRouter);
-app.post("/users", usersRouter, (req, res, next) => {
-  let id = req.body.id,
+app.post("/addUser", usersRouter, (req, res, next) => {
+  let id = uuidv1(),
     name = req.body.name,
     email = req.body.email,
     age = req.body.age;
@@ -48,7 +38,7 @@ app.post("/users", usersRouter, (req, res, next) => {
     else console.log("userJSON write successful");
     usersStream.end();
   });
-  next();
+  next(res.redirect("/users"));
 });
 app.get("/users", usersRouter);
 
