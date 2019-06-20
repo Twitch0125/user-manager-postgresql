@@ -7,9 +7,10 @@ var bodyParser = require("body-parser");
 const fs = require("fs");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var editRouter = require("./routes/edit");
 var uuidv1 = require("uuid/v1");
 
-const UserData = require('./UserData');
+const UserData = require("./UserData");
 
 const User = require("./User");
 var app = express();
@@ -19,7 +20,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 app.use(logger("dev"));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -27,23 +27,44 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", indexRouter);
-app.post("/addUser", usersRouter, (req, res, next) => {
+//handle form data from index form
+app.post("/addUser", (req, res, next) => {
   let id = uuidv1(),
     username = req.body.username,
     name = req.body.name,
     email = req.body.email,
     age = req.body.age;
   let user = new User(id, username, name, email, age);
-  UserData.addUser(user);
-  let usersStream = fs.createWriteStream("public/users.json", { flags: "a" });
-  usersStream.write(UserData, err => {
-    if (err) console.log("error writing userJSON");
-    else console.log("userJSON write successful");
-    usersStream.end();
-  });
+  UserData.users.push(user);
+  writeToJSON(); //writes to JSON file stored in /public
+
   next(res.redirect("/users"));
 });
 app.get("/users", usersRouter);
+app.get("/edit", editRouter);
+app.post("/editUser", (req, res, next) => {
+  //get data from form
+  let id = req.body.id,
+    username = req.body.username,
+    name = req.body.name,
+    email = req.body.email,
+    age = req.body.age;
+  //delete the old user
+  UserData.users = UserData.users.filter(user => user.id != id);
+  //create new user and store it
+  let newUser = new User(id, username, name, email, age);
+  UserData.users.push(newUser);
+  writeToJSON();
+  res.redirect("/users");
+});
+//receives a query string
+///?id= #given id
+app.get("/deleteUser", (req, res, next) => {
+  let id = req.query.id;
+  UserData.users = UserData.users.filter(user => user.id != id);
+  writeToJSON();
+  next(res.redirect("/users"));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,5 +81,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+function writeToJSON() {
+  //storing in users.json file in /public
+  let usersStream = fs.createWriteStream("public/users.json");
+  usersStream.write(JSON.stringify(UserData.users), err => {
+    if (err) console.log("error writing userJSON");
+    else console.log("userJSON write successful");
+    usersStream.end();
+  });
+}
 
 module.exports = app;

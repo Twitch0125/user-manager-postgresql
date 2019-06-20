@@ -1,13 +1,16 @@
-class UserData{
-    constructor(){
-        this.users = []
-    }
-    addUser(userObject){
-        this.users.push(userObject);
-    }
-    removeUser(userObject){
-        this.users = this.users.filter(user => user != userObject);
-    }
-}
+// class UserData{
+//     constructor(){
+//         this.users = []
+//     }
+//     addUser(userObject){
+//         this.users.push(userObject);
+//     }
+//     removeUser(userObject){
+//         this.users = this.users.filter(user => user != userObject);
+//     }
+// }
 
+let UserData = {
+    users: []
+}
 module.exports = UserData

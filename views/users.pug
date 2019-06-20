@@ -4,10 +4,17 @@ html
         title= title
         link(rel='stylesheet', href='/stylesheets/style.css')
         script(type='text/javascript', src='users.json')
-        script(type="text/javascript", src="/javascripts/users.js")
-        script(src="https://code.jquery.com/jquery-3.4.1.min.js")
-
-    h3 user listing
+    .listHead
+        h3 user listing
+        a(href="/")
+            button#create-user create user
     ul
-        each val, index in userData
-            li= index + ': ' + val
+        each val in userData.users
+            div(class="user")
+                each value, key in val
+                    li= key + ': ' + value
+                .userButtons
+                    a(href=`/edit?id=${val.id}`)
+                        button#edit-user edit
+                    a(href=`/deleteUser?id=${val.id}`)
+                        button#delete-user delete

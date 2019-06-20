@@ -1,15 +1,1 @@
-
-    {
-        "id": "9af56810-921a-11e9-8158-774abbd518e2",
-        "username": "Twitch0125",
-        "name": "Kaleb Ercanbrack",
-        "email": "twitcherc@gmail.com",
-        "age": "19"
-    }
-    {
-        "id": "72776e40-921c-11e9-94e9-bb11d7a3e137",
-        "username": "asdf",
-        "name": "sdf",
-        "email": "twi@gmi.comn",
-        "age": "123"
-    }
+[{"id":"612f8a70-92f1-11e9-a0e1-7b28fe5c7101","username":"asdf","name":"asdf","email":"asdf@df.fd","age":"3"},{"id":"69cc6f90-92f1-11e9-a0e1-7b28fe5c7101","username":"","name":"","email":"","age":""}]

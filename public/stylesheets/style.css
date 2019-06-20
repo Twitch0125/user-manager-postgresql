@@ -27,8 +27,19 @@ a {
   margin: 0;
 }
 
-.formField{
-  
+.user{
+  list-style: none;
+}
+.listHead{
+  display: inline;
+}
+
+.userHead{
+  display: inline;
+}
+
+.userButtons{
+  display: inline;
 }
 
 .formButton{
