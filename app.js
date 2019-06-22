@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", indexRouter);
 //handle form data from index form
-app.post("/addUser", (req, res, next) => {
+app.post("/addUser", (req, res) => {
   let newUser = new db.user();
   const { username, firstname, lastname, email, age } = req.body;
   newUser.username = username;
@@ -34,8 +34,6 @@ app.post("/addUser", (req, res, next) => {
   db.addUser(newUser, () => {
     res.redirect("/users");
   });
-
-  // next(res.redirect("/users"));
 });
 app.get("/users", usersRouter);
 app.get("/edit", editRouter);
@@ -43,8 +41,9 @@ app.post("/editUser", (req, res) => {
   //get data from form
   const { id, username, firstname, lastname, email, age } = req.body;
   let data = { id, username, firstname, lastname, email, age };
-  db.editUser(data);
-  res.redirect("/users");
+  db.editUser(data, () => {
+    res.redirect("/users");
+  });
 });
 
 //receives a query string

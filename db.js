@@ -27,8 +27,8 @@ function addUser(user, callback) {
   callback();
 }
 
-function editUser(userData) {
-  user.update(
+function editUser(userData, callback) {
+  user.updateOne(
     { _id: userData.id },
     {
       username: `${userData.username}`,
@@ -44,6 +44,7 @@ function editUser(userData) {
       }
     }
   );
+  callback();
 }
 
 function deleteUser(id) {
