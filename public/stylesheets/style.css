@@ -42,6 +42,10 @@ a {
   display: inline;
 }
 
+.buttons {
+  width: 10%;
+}
+
 .userList {
   overflow: scroll;
 }

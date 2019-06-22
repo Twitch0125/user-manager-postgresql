@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+mongoose.connect(
+  "mongodb+srv://appdb:appdb@cluster0-zl9j0.mongodb.net/UserManager",
+  {
+    useNewUrlParser: true
+  }
+);
 
 const userSchema = mongoose.Schema({
   id: String,
@@ -12,13 +17,14 @@ const userSchema = mongoose.Schema({
 
 const user = mongoose.model("User", userSchema);
 
-function addUser(user) {
+function addUser(user, callback) {
   user.save((err, data) => {
     if (err) {
       return console.error(err);
     }
     console.log(`new user: ${data}`);
   });
+  callback();
 }
 
 function editUser(userData) {

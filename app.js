@@ -4,7 +4,6 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
-const fs = require("fs");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var editRouter = require("./routes/edit");
@@ -26,15 +25,17 @@ app.get("/", indexRouter);
 //handle form data from index form
 app.post("/addUser", (req, res, next) => {
   let newUser = new db.user();
-  const { id, username, firstname, lastname, email, age } = req.body;
+  const { username, firstname, lastname, email, age } = req.body;
   newUser.username = username;
   newUser.firstname = firstname;
   newUser.lastname = lastname;
   newUser.email = email;
   newUser.age = age;
-  db.addUser(newUser);
+  db.addUser(newUser, () => {
+    res.redirect("/users");
+  });
 
-  next(res.redirect("/users"));
+  // next(res.redirect("/users"));
 });
 app.get("/users", usersRouter);
 app.get("/edit", editRouter);

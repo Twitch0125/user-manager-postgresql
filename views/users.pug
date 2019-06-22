@@ -1,20 +1,48 @@
 extends index.pug
 block content
     .listHead
-        h1(class="ui header") user listing
+        h1(class="ui header") User Listing
         a(href="/")
-            button(class="ui pink button") create user
-    ul.userList
-        each val in users
-            div(class="user")
-                li= 'Username: ' + val.username
-                li= 'First Name: ' + val.firstname
-                li= 'Last Name: ' + val.lastname
-                li= 'Email: ' + val.email
-                li= 'Age: ' + val.age
-                li= 'ID: ' + val._id
-                .userButtons
-                    a(href=`/edit?id=${val._id}`)
-                        button(class="ui pink button") edit
-                    a(href=`/deleteUser?id=${val._id}`)
-                        button(class="ui pink button") delete
+            button(class="ui pink button") Create User
+    //- ul.userList
+    //-     each val in users
+    //-         div(class="user")
+    //-             li= 'Username: ' + val.username
+    //-             li= 'First Name: ' + val.firstname
+    //-             li= 'Last Name: ' + val.lastname
+    //-             li= 'Email: ' + val.email
+    //-             li= 'Age: ' + val.age
+    //-             li= 'ID: ' + val._id
+    //-             .userButtons
+    //-                 a(href=`/edit?id=${val._id}`)
+    //-                     button(class="ui pink button") edit
+    //-                 a(href=`/deleteUser?id=${val._id}`)
+    //-                     button(class="ui pink button") delete
+    table(class="ui celled table userList" id="users")
+        thead
+            tr
+                th
+                    div(class="ui action input")
+                        input(type="text" id="search" placeholder="Search Anything...")
+                        button(class="ui icon button")
+                            i(class="search icon")
+                th Username
+                th First Name
+                th Last Name
+                th Email
+                th Age
+                th Id
+        tbody
+            each val in users
+                tr
+                    td.buttons
+                        a(href=`/edit?id=${val._id}`)
+                            button(class="ui pink button") edit
+                        a(href=`/deleteUser?id=${val._id}`)
+                            button(class="ui yellow button delete") delete
+                    td(data-label="username")= val.username
+                    td(data-label="firstname")= val.firstname
+                    td(data-label="lastname")= val.lastname
+                    td(data-label="email")= val.email
+                    td(data-label="age")= val.age
+                    td(data-label="id")= val._id
