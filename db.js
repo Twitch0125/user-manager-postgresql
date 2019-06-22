@@ -30,6 +30,12 @@ function editUser(userData) {
       lastname: `${userData.lastname}`,
       email: `${userData.email}`,
       age: userData.age
+    },
+    {},
+    (err, res) => {
+      if (err) {
+        console.error(err);
+      }
     }
   );
 }
