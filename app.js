@@ -9,20 +9,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var editRouter = require("./routes/edit");
 var uuidv1 = require("uuid/v1");
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/test");
-
-const User = mongoose.model("User", {
-  id: String,
-  username: String,
-  name: String,
-  email: String,
-  age: Number
-});
-
-const UserData = require("./UserData");
-
-const User = require("./User");
+const db = require("./db");
 var app = express();
 
 // view engine setup
@@ -39,40 +26,42 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", indexRouter);
 //handle form data from index form
 app.post("/addUser", (req, res, next) => {
-  let id = uuidv1(),
-    username = req.body.username,
-    name = req.body.name,
-    email = req.body.email,
-    age = req.body.age;
-  let user = new User(id, username, name, email, age);
-  UserData.users.push(user);
-  writeToJSON(); //writes to JSON file stored in /public
+  let newUser = new db.user();
+  const { id, username, firstname, lastname, email, age } = req.body;
+  // newUser = { id, firstname, lastname, email, age };
+  newUser.id = id;
+  newUser.username = username;
+  newUser.firstname = firstname;
+  newUser.lastname = lastname;
+  newUser.email = email;
+  newUser.age = age;
 
+  newUser.save((err, data) => {
+    if (err) {
+      return console.error(err);
+    }
+    console.log(`new user: ${data}`);
+  });
   next(res.redirect("/users"));
 });
 app.get("/users", usersRouter);
 app.get("/edit", editRouter);
 app.post("/editUser", (req, res, next) => {
   //get data from form
-  let id = req.body.id,
-    username = req.body.username,
-    name = req.body.name,
-    email = req.body.email,
-    age = req.body.age;
+  const { id, firstname, lastname, email, age } = req.body;
   //delete the old user
-  UserData.users = UserData.users.filter(user => user.id != id);
   //create new user and store it
-  let newUser = new User(id, username, name, email, age);
-  UserData.users.push(newUser);
-  writeToJSON();
   res.redirect("/users");
 });
+
 //receives a query string
 ///?id= #given id
 app.get("/deleteUser", (req, res, next) => {
   let id = req.query.id;
-  UserData.users = UserData.users.filter(user => user.id != id);
-  writeToJSON();
+  db.user.deleteOne({ id: id }),
+    err => {
+      console.error(err);
+    };
   next(res.redirect("/users"));
 });
 
@@ -91,15 +80,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
-function writeToJSON() {
-  //storing in users.json file in /public
-  let usersStream = fs.createWriteStream("public/users.json");
-  usersStream.write(JSON.stringify(UserData.users), err => {
-    if (err) console.log("error writing userJSON");
-    else console.log("userJSON write successful");
-    usersStream.end();
-  });
-}
 
 module.exports = app;

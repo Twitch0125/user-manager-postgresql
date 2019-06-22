@@ -1,22 +1,19 @@
-doctype html
-html
-    head
-        title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
-        script(type='text/javascript', src='users.json')
-        script(type="text/javascript", src="/javascripts/users.js")
-    form(class="myForm" id="myForm", method="post", action=`/editUser`)
-        h2(class="formHead") Editing User
-        label(class="formField formLabel" for="username") Username
-        input(class="formField formInput" type="text", id="username", name="username" placeholder="username" value= user.username)
-        label(class="formField formLabel" for="name") Name
-        input(class="formField formInput" type="text", id="name", name="name" placeholder="name" value= user.name)
-        label(class="formField formLabel" for="email") Email
-        input(class="formField formInput" type="email", id="email", name="email" placeholder="email" value= user.email)
-        label(class="formField formLabel" for='age') Age
-        input(class="formField formInput" type="number" id='age', name='age' placeholder="age" value= user.age)
-        input(class="formField formInput" type="hidden" name='id' value= user.id)
-        input(class="formField formButton" type="submit" value="Confirm User")
-    h3 your id is #{user.id}
-    a(href="/users")
-        button#cancel-edit cancel
+extends index.pug
+    block content
+        form(class="myForm" id="myForm", method="post", action=`/editUser`)
+            h2(class="formHead") Editing User
+            label(class="ui yellow label formField formLabel" for="username") Username
+            input(class="ui input formField formInput" type="text", id="username", name="username" placeholder="username" value= user.username)
+            label(class="ui yellow label formField formLabel" for="name") First Name
+            input(class="ui input formField formInput" type="text", id="name", name="firstname" placeholder="first name")
+            label(class="ui yellow label formField formLabel" for="name") Last Name
+            input(class="ui input formField formInput" type="text", id="name", name="lastname" placeholder="last name")
+            label(class="ui yellow label formField formLabel" for="email") Email
+            input(class="ui input formField formInput" type="email", id="email", name="email" placeholder="email" value= user.email)
+            label(class="ui yellow label formField formLabel" for='age') Age
+            input(class="ui input formField formInput" type="number" id='age', name='age' placeholder="age" value= user.age)
+            input(class="formField formInput" type="hidden" name='id' value= user.id)
+            input(class="formField formButton" type="submit" value="Confirm User")
+        h3 your id is #{user.id}
+        a(href="/users")
+            button#cancel-edit cancel

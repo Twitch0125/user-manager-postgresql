@@ -1,18 +1,18 @@
-doctype html
-html
-    head
-        title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
-        script(type='text/javascript', src='users.json')
+extends index.pug
+block content
     .listHead
         h3 user listing
         a(href="/")
             button#create-user create user
     ul
-        each val in userData.users
+        each val in users
             div(class="user")
-                each value, key in val
-                    li= key + ': ' + value
+                li= val.username
+                li= val.firstname
+                li= val.lastname
+                li= val.email
+                li= val.age
+                li= val.id
                 .userButtons
                     a(href=`/edit?id=${val.id}`)
                         button#edit-user edit
