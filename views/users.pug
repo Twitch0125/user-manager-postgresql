@@ -18,10 +18,10 @@ block content
     //-                     button(class="ui pink button") edit
     //-                 a(href=`/deleteUser?id=${val._id}`)
     //-                     button(class="ui pink button") delete
-    table(class="ui celled table userList" id="users")
+    table(class="ui sortable celled table userList" id="users")
         thead
             tr
-                th
+                th.no-sort
                     div(class="ui action input")
                         input(type="text" id="search" placeholder="Search Anything...")
                         button(class="ui icon button")
