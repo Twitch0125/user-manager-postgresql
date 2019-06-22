@@ -9,6 +9,16 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var editRouter = require("./routes/edit");
 var uuidv1 = require("uuid/v1");
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/test");
+
+const User = mongoose.model("User", {
+  id: String,
+  username: String,
+  name: String,
+  email: String,
+  age: Number
+});
 
 const UserData = require("./UserData");
 
