@@ -1,21 +1,29 @@
 doctype html
 html
   head
-    title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css")
+    link(href="https://fonts.googleapis.com/css?family=Zilla+Slab&display=swap" rel="stylesheet")
+    script(defer src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous")
+    script(defer src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js")
+    script(defer type="text/javascript" src="/javascripts/tablesort.js")
+    script(defer type="text/javascript" src="/javascripts/main.js")
   body
-    div(class="userCreation" id="userCreation")
-      form(class="myForm" id="myForm", method="post", action="/addUser")
-        h2(class="formHead") User Creation
-        label(class="formField formLabel" for="username") Username
-        input(class="formField formInput" type="text", id="username", name="username" placeholder="username")
-        label(class="formField formLabel" for="name") Name
-        input(class="formField formInput" type="text", id="name", name="name" placeholder="name")
-        label(class="formField formLabel" for="email") Email
-        input(class="formField formInput" type="email", id="email", name="email" placeholder="email")
-        label(class="formField formLabel" for='age') Age
-        input(class="formField formInput" type="number" id='age', name='age' placeholder="age")
-        input(class="formField formButton" type="submit", value="Add User")
-    a(href="/users")
-      button users list
+  block content
+      div(class="ui userCreation" id="userCreation")
+        form(class="ui form myForm" id="myForm", method="post", action="/addUser")
+          h2(class="ui header formHead") User Creation
+          label(class="ui yellow label formField formLabel" for="username") Username
+          input(class="ui input formField formInput" type="text", id="username", name="username" placeholder="username")
+          label(class="ui yellow label formField formLabel" for="name") First Name
+          input(class="ui input formField formInput" type="text", id="name", name="firstname" placeholder="first name")
+          label(class="ui yellow label formField formLabel" for="name") Last Name
+          input(class="ui input formField formInput" type="text", id="name", name="lastname" placeholder="last name")
+          label(class="ui yellow label formField formLabel" for="email") Email
+          input(class="ui input formField formInput" type="email", id="email", name="email" placeholder="email")
+          label(class="ui yellow label formField formLabel" for='age') Age
+          input(class="ui input formField formInput" type="number" id='age', name='age' placeholder="age")
+          input(class="ui pink button formField formButton" type="submit", value="Add User")
+      a(class="userListButton" href="/users")
+        button(class="ui pink button") users list
 

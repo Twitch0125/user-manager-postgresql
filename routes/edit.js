@@ -1,12 +1,13 @@
 var express = require("express");
 var router = express.Router();
-
-const UserData = require("../UserData");
+var db = require("../db");
 
 router.get("/edit", function(req, res, next) {
   let targetID = req.query.id;
-  let targetUser = UserData.users.filter(user => user.id == targetID);
-  res.render("edit", { user: targetUser[0] });
+  db.user.find({ _id: targetID }, (err, user) => {
+    if (err) return console.error(err);
+    res.render("edit", { user: user[0] });
+  });
 });
 
 module.exports = router;

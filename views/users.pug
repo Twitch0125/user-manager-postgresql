@@ -1,20 +1,48 @@
-doctype html
-html
-    head
-        title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
-        script(type='text/javascript', src='users.json')
+extends index.pug
+block content
     .listHead
-        h3 user listing
+        h1(class="ui header") User Listing
         a(href="/")
-            button#create-user create user
-    ul
-        each val in userData.users
-            div(class="user")
-                each value, key in val
-                    li= key + ': ' + value
-                .userButtons
-                    a(href=`/edit?id=${val.id}`)
-                        button#edit-user edit
-                    a(href=`/deleteUser?id=${val.id}`)
-                        button#delete-user delete
+            button(class="ui pink button") Create User
+    //- ul.userList
+    //-     each val in users
+    //-         div(class="user")
+    //-             li= 'Username: ' + val.username
+    //-             li= 'First Name: ' + val.firstname
+    //-             li= 'Last Name: ' + val.lastname
+    //-             li= 'Email: ' + val.email
+    //-             li= 'Age: ' + val.age
+    //-             li= 'ID: ' + val._id
+    //-             .userButtons
+    //-                 a(href=`/edit?id=${val._id}`)
+    //-                     button(class="ui pink button") edit
+    //-                 a(href=`/deleteUser?id=${val._id}`)
+    //-                     button(class="ui pink button") delete
+    table(class="ui sortable celled table userList" id="users")
+        thead
+            tr
+                th.no-sort
+                    div(class="ui action input")
+                        input(type="text" id="search" placeholder="Search Anything...")
+                        button(class="ui icon button")
+                            i(class="search icon")
+                th Username
+                th First Name
+                th Last Name
+                th Email
+                th Age
+                th Id
+        tbody
+            each val in users
+                tr
+                    td.buttons
+                        a(href=`/edit?id=${val._id}`)
+                            button(class="ui pink button") edit
+                        a(href=`/deleteUser?id=${val._id}`)
+                            button(class="ui yellow button delete") delete
+                    td(data-label="username")= val.username
+                    td(data-label="firstname")= val.firstname
+                    td(data-label="lastname")= val.lastname
+                    td(data-label="email")= val.email
+                    td(data-label="age")= val.age
+                    td(data-label="id")= val._id
