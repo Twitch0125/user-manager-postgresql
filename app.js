@@ -40,8 +40,8 @@ app.get("/users", usersRouter);
 app.get("/edit", editRouter);
 app.post("/editUser", (req, res) => {
   //get data from form
-  const { id, firstname, lastname, email, age } = req.body;
-  let data = { id, firstname, lastname, email, age };
+  const { id, username, firstname, lastname, email, age } = req.body;
+  let data = { id, username, firstname, lastname, email, age };
   db.editUser(data);
   res.redirect("/users");
 });

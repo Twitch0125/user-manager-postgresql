@@ -1,10 +1,10 @@
 extends index.pug
 block content
     .listHead
-        h3 user listing
+        h1(class="ui header") user listing
         a(href="/")
-            button#create-user create user
-    ul
+            button(class="ui pink button") create user
+    ul.userList
         each val in users
             div(class="user")
                 li= 'Username: ' + val.username
@@ -15,6 +15,6 @@ block content
                 li= 'ID: ' + val._id
                 .userButtons
                     a(href=`/edit?id=${val._id}`)
-                        button#edit-user edit
+                        button(class="ui pink button") edit
                     a(href=`/deleteUser?id=${val._id}`)
-                        button#delete-user delete
+                        button(class="ui pink button") delete

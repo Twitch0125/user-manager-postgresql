@@ -42,6 +42,10 @@ a {
   display: inline;
 }
 
+.userList {
+  overflow: scroll;
+}
+
 .userHead {
   display: inline;
 }
