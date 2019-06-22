@@ -8,7 +8,6 @@ const fs = require("fs");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var editRouter = require("./routes/edit");
-var uuidv1 = require("uuid/v1");
 const db = require("./db");
 var app = express();
 
@@ -28,41 +27,31 @@ app.get("/", indexRouter);
 app.post("/addUser", (req, res, next) => {
   let newUser = new db.user();
   const { id, username, firstname, lastname, email, age } = req.body;
-  // newUser = { id, firstname, lastname, email, age };
-  newUser.id = id;
   newUser.username = username;
   newUser.firstname = firstname;
   newUser.lastname = lastname;
   newUser.email = email;
   newUser.age = age;
+  db.addUser(newUser);
 
-  newUser.save((err, data) => {
-    if (err) {
-      return console.error(err);
-    }
-    console.log(`new user: ${data}`);
-  });
   next(res.redirect("/users"));
 });
 app.get("/users", usersRouter);
 app.get("/edit", editRouter);
-app.post("/editUser", (req, res, next) => {
+app.post("/editUser", (req, res) => {
   //get data from form
   const { id, firstname, lastname, email, age } = req.body;
-  //delete the old user
-  //create new user and store it
+  let data = { id, firstname, lastname, email, age };
+  db.editUser(data);
   res.redirect("/users");
 });
 
 //receives a query string
 ///?id= #given id
-app.get("/deleteUser", (req, res, next) => {
+app.get("/deleteUser", (req, res) => {
   let id = req.query.id;
-  db.user.deleteOne({ id: id }),
-    err => {
-      console.error(err);
-    };
-  next(res.redirect("/users"));
+  db.deleteUser(id);
+  res.redirect("/users");
 });
 
 // catch 404 and forward to error handler

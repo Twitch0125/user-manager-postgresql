@@ -7,14 +7,14 @@ block content
     ul
         each val in users
             div(class="user")
-                li= val.username
-                li= val.firstname
-                li= val.lastname
-                li= val.email
-                li= val.age
-                li= val.id
+                li= 'Username: ' + val.username
+                li= 'First Name: ' + val.firstname
+                li= 'Last Name: ' + val.lastname
+                li= 'Email: ' + val.email
+                li= 'Age: ' + val.age
+                li= 'ID: ' + val._id
                 .userButtons
-                    a(href=`/edit?id=${val.id}`)
+                    a(href=`/edit?id=${val._id}`)
                         button#edit-user edit
-                    a(href=`/deleteUser?id=${val.id}`)
+                    a(href=`/deleteUser?id=${val._id}`)
                         button#delete-user delete
