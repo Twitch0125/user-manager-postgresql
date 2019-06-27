@@ -24,16 +24,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", indexRouter);
 //handle form data from index form
 app.post("/addUser", (req, res) => {
-  let newUser = new db.user();
-  const { username, firstname, lastname, email, age } = req.body;
-  newUser.username = username;
-  newUser.firstname = firstname;
-  newUser.lastname = lastname;
-  newUser.email = email;
-  newUser.age = age;
-  db.addUser(newUser, () => {
-    res.redirect("/users");
-  });
+  db.createUser(req, res);
+  res.redirect("/users");
 });
 app.get("/users", usersRouter);
 app.get("/edit", editRouter);
