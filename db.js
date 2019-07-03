@@ -6,16 +6,6 @@ const pool = new Pool({
   connectionString: connectionString
 });
 
-function addUser(user, callback) {
-  user.save((err, data) => {
-    if (err) {
-      return console.error(err);
-    }
-    console.log(`new user: ${data}`);
-  });
-  callback();
-}
-
 const getUsers = (req, res) => {
   pool.query("SELECT * FROM users ORDER BY id ASC", (err, results) => {
     if (err) {
@@ -85,33 +75,6 @@ const deleteUser = (req, res) => {
     res.status(200).send(`User deleted with ID: ${id}`);
   });
 };
-
-function editUser(userData, callback) {
-  user.updateOne(
-    { _id: userData.id },
-    {
-      username: `${userData.username}`,
-      firstname: `${userData.firstname}`,
-      lastname: `${userData.lastname}`,
-      email: `${userData.email}`,
-      age: userData.age
-    },
-    {},
-    (err, res) => {
-      if (err) {
-        console.error(err);
-      }
-    }
-  );
-  callback();
-}
-
-function deleteUser(id) {
-  //remove user from db that has the given id
-  user.deleteOne({ _id: `${id}` }, {}, err => {
-    console.error(err);
-  });
-}
 
 module.exports = {
   getUsers,
