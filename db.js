@@ -1,4 +1,4 @@
-const Pool = require("pg").Pool;
+const { Pool } = require("pg");
 const connectionString =
   "postgres://nmsntpamqkmtpc:cbc0be315ba9b965ae86c9299fd0b365208fd8cd6a61e3b9b4881dd876594d54@ec2-54-204-35-248.compute-1.amazonaws.com:5432/d8me828s64mer6";
 
@@ -12,6 +12,7 @@ const getUsers = (req, res) => {
       throw err;
     }
     res.status(200).json(results.rows);
+    // pool.end();
   });
 };
 
