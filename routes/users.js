@@ -1,14 +1,15 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-const db = require("../db");
+const db = require('../db');
 
 /* GET users listing. */
-router.get("/users", function(req, res, next) {
+router.get('/users', function(req, res, next) {
   //find all users in the database
-  db.user.find({}, (err, users) => {
-    if (err) return console.error(err);
-    res.render("users", { users: users });
-  });
+  // db.user.find({}, (err, users) => {
+  //   if (err) return console.error(err);
+  //   res.render("users", { users: users });
+  // });z
+  res.render(db.getUsers());
 });
 
 module.exports = router;
