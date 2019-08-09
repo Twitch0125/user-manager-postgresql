@@ -13,6 +13,8 @@ const getUsers = (req, res) => {
     if (err) {
       throw err;
     }
+    console.log(res);
+
     res.status(200).json(results.rows);
   });
 };
@@ -37,14 +39,14 @@ const createUser = (req, res) => {
     userAge = 0;
   }
   pool.query(
-    'INSERT INTO users (username, firstname, lastname, email, age) VALUES ($1, $2, $3) RETURNING *',
-    [name, userAge, email],
+    'INSERT INTO users (username, firstname, lastname, email, age) VALUES ($1, $2, $3 ,$4, $5) RETURNING *',
+    [username, firstname, lastname, email, age],
     (err, results) => {
       if (err) {
         throw err;
       }
       console.log(`id: ${JSON.stringify(results.rows[0])}`); //id: {"id":9,"name":"Peter","age":25,"email":"pjohnson@mtech.org"}
-      res.status(201).send(`User added with ID: ${results.rows[0].id}  `);
+      res.status(201) /*.send(`User added with ID: ${results.rows[0].id}  `)*/;
     }
   );
 };
