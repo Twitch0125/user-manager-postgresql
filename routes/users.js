@@ -8,7 +8,8 @@ router.get('/users', function(req, res, next) {
   // db.user.find({}, (err, users) => {
   //   if (err) return console.error(err);
   //   res.render("users", { users: users });
-  // });z
+  // });
+
   res.render(db.getUsers());
 });
 

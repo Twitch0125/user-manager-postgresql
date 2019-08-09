@@ -1,10 +1,12 @@
 const { Pool } = require('pg');
-const connectionString =
-  'postgres://nmsntpamqkmtpc:cbc0be315ba9b965ae86c9299fd0b365208fd8cd6a61e3b9b4881dd876594d54@ec2-54-204-35-248.compute-1.amazonaws.com:5432/d8me828s64mer6';
+// const connectionString =
+// 'postgres://eapphbjrxzhxhp:0dd689c06c27cc033fcc57e1b51db9e72469be3114c3a92fd66d5fe5e74515e2@ec2-54-235-246-201.compute-1.amazonaws.com:5432/d8aqbnfhudsq2s';
 
-const pool = new Pool({
-  connectionString: connectionString
-});
+// const pool = new Pool({
+//   connectionString: connectionString
+// });
+
+const pool = new Pool();
 
 const getUsers = (req, res) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (err, results) => {
