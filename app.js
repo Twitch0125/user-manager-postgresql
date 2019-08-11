@@ -34,7 +34,7 @@ app.post('/editUser', (req, res) => {
   //get data from form
   const { id, username, firstname, lastname, email, age } = req.body;
   let data = { id, username, firstname, lastname, email, age };
-  db.editUser(data, () => {
+  db.updateUser(data, () => {
     res.redirect('/users');
   });
 });
@@ -43,8 +43,9 @@ app.post('/editUser', (req, res) => {
 ///?id= #given id
 app.get('/deleteUser', (req, res) => {
   let id = req.query.id;
-  db.deleteUser(id);
-  res.redirect('/users');
+  db.deleteUser(id, () => {
+    res.redirect('/users');
+  });
 });
 
 // catch 404 and forward to error handler

@@ -12,8 +12,8 @@ block content
         input(class="ui input formField formInput" type="email", id="email", name="email" placeholder="email" value= user.email)
         label(class="ui yellow label formField formLabel" for='age') Age
         input(class="ui input formField formInput" type="number" id='age', name='age' placeholder="age" value= user.age)
-        input(class="formField formInput" type="hidden" name='id' value= user._id)
+        input(class="formField formInput" type="hidden" name='id' value= user.id)
         input(class="ui pink button formField formButton" type="submit" value="Confirm User")
-    h3 your id is #{user._id}
+    h3 your id is #{user.id}
     a(href="/users")
         button(class="ui pink button") cancel

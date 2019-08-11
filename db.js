@@ -8,26 +8,12 @@ const { Pool } = require('pg');
 
 const pool = new Pool();
 
-const getUsers = (req, res) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC', (err, results) => {
-    if (err) {
-      throw err;
-    }
-    console.log(res);
-
-    res.status(200).json(results.rows);
-  });
+const getUsers = () => {
+  return pool.query('SELECT * FROM users ORDER BY id ASC');
 };
 
-const getUserById = (req, res) => {
-  const id = parseInt(req.params.id);
-
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (err, results) => {
-    if (err) {
-      throw err;
-    }
-    res.status(200).json(results.rows);
-  });
+const getUserById = id => {
+  return pool.query('SELECT * FROM users WHERE id = $1', [id]);
 };
 
 const createUser = (req, res) => {
@@ -51,32 +37,24 @@ const createUser = (req, res) => {
   );
 };
 
-const updateUser = (req, res) => {
-  const id = parseInt(req.body.id);
-  const { name, age, email } = req.body;
-  let userAge = parseInt(age, 10);
-
+const updateUser = (
+  { id, username, firstname, lastname, email, age },
+  callback
+) => {
   pool.query(
-    'UPDATE users SET name = $1, age = $2, email = $3 WHERE id = $4',
-    [name, userAge, email, id],
-    (err, results) => {
-      if (err) {
-        throw err;
-      }
-      res.status(200).send(`User modified with ID: ${id}`);
+    'UPDATE users SET username = $1, firstname = $2, lastname = $3, email = $4, age = $5 WHERE id = $6',
+    [username, firstname, lastname, email, age, id],
+    err => {
+      if (err) throw err;
+      callback();
     }
   );
 };
 
-const deleteUser = (req, res) => {
-  const id = parseInt(req.body.userId);
-  console.log(`deleteUser id: ${id}`);
-
-  pool.query('DELETE FROM users WHERE id = $1', [id], (err, results) => {
-    if (err) {
-      throw err;
-    }
-    res.status(200).send(`User deleted with ID: ${id}`);
+const deleteUser = (id, callback) => {
+  pool.query('DELETE FROM users WHERE id = $1', [id], err => {
+    if (err) throw err;
+    callback();
   });
 };
 
@@ -85,5 +63,6 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  query: (text, params) => pool.query(text, params)
 };
