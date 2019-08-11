@@ -1,5 +1,5 @@
 # user-manager
-This is a simple user manager created with Express, and MongoDB(mongoose).
+This is a simple user manager created with Express, and postgres.
 The front end was made using JQuery and Semantic UI, powered by Pugjs
 
 
