@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 //   connectionString: connectionString
 // });
 
-const pool = new Pool();
+const pool = new Pool(); //uses .env variables
 
 const getUsers = () => {
   return pool.query('SELECT * FROM users ORDER BY id ASC');
