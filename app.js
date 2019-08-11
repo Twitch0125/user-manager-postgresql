@@ -25,8 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', indexRouter);
 //handle form data from index form
 app.post('/addUser', (req, res) => {
-  db.createUser(req, res);
-  res.redirect('/users');
+  db.createUser(req, res, () => {
+    res.redirect('/users');
+  });
 });
 app.get('/users', usersRouter);
 app.get('/edit', editRouter);

@@ -1,12 +1,30 @@
 const { Pool } = require('pg');
-// const connectionString =
-// 'postgres://eapphbjrxzhxhp:0dd689c06c27cc033fcc57e1b51db9e72469be3114c3a92fd66d5fe5e74515e2@ec2-54-235-246-201.compute-1.amazonaws.com:5432/d8aqbnfhudsq2s';
+const connectionString =
+  'postgres://eapphbjrxzhxhp:0dd689c06c27cc033fcc57e1b51db9e72469be3114c3a92fd66d5fe5e74515e2@ec2-54-235-246-201.compute-1.amazonaws.com:5432/d8aqbnfhudsq2s';
 
-// const pool = new Pool({
-//   connectionString: connectionString
-// });
+const pool = new Pool({
+  connectionString: connectionString,
+  ssl: true
+});
 
-const pool = new Pool(); //uses .env variables
+pool.connect();
+
+// const pool = new Pool(); //uses .env variables
+
+const tableStr = `CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username varchar(100) NOT NULL,
+    firstname varchar(100) NOT NULL,
+    lastname varchar(100) NOT NULL,
+    email varchar(100) NOT NULL,
+    age integer NOT NULL
+    )`;
+
+const createTable = () => {
+  pool.query(tableStr);
+};
+
+createTable();
 
 const getUsers = () => {
   return pool.query('SELECT * FROM users ORDER BY id ASC');
@@ -16,7 +34,7 @@ const getUserById = id => {
   return pool.query('SELECT * FROM users WHERE id = $1', [id]);
 };
 
-const createUser = (req, res) => {
+const createUser = (req, res, callback) => {
   const { username, firstname, lastname, email, age } = req.body;
   console.log(`${username},${firstname}, ${lastname}, ${age}, ${email}`);
 
@@ -33,6 +51,7 @@ const createUser = (req, res) => {
       }
       console.log(`id: ${JSON.stringify(results.rows[0])}`); //id: {"id":9,"name":"Peter","age":25,"email":"pjohnson@mtech.org"}
       res.status(201) /*.send(`User added with ID: ${results.rows[0].id}  `)*/;
+      callback();
     }
   );
 };
@@ -64,5 +83,6 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  createTable,
   query: (text, params) => pool.query(text, params)
 };
