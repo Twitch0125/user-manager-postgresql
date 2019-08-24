@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
-const connectionString =
-  'postgres://eapphbjrxzhxhp:0dd689c06c27cc033fcc57e1b51db9e72469be3114c3a92fd66d5fe5e74515e2@ec2-54-235-246-201.compute-1.amazonaws.com:5432/d8aqbnfhudsq2s';
+require('dotenv').config();
+const connectionString = process.env.PG_CONNECTION_STRING;
 
 const pool = new Pool({
   connectionString: connectionString,
